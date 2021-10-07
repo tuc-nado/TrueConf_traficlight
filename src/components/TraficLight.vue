@@ -11,7 +11,6 @@ import { mapGetters } from 'vuex'
 export default {
     data (){
         return {
-            name: '',
             currentPath: window.location.pathname,
             prePath: '',
         }
@@ -21,11 +20,9 @@ export default {
         if(this.currentPath === '/yellow'){
             this.prePath = '/red'
         }
-        // sessionStorage.clear()
-        // localStorage.clear()
-        if(localStorage.getItem('timer') !== null){
-            console.log('fuck')
+        if((window.history.state.back !== null) && (localStorage.getItem('timer') !== null)){
             this.$store.commit('setTimer', localStorage.getItem('timer'))
+            this.prePath = localStorage.getItem('prePath')
         }
         this.prTimer
     },
@@ -71,6 +68,7 @@ export default {
                 this.currentPath = '/yellow'
                 this.$router.push(this.currentPath)
             }
+            localStorage.setItem('prePath', this.prePath)
             this.$store.commit('setActive')
         }
     },
@@ -80,9 +78,16 @@ export default {
 
 <style>
     .trafic-light{
+        width: 300px;
+        height: 500px;
+        margin: 0 auto;
+        padding: 20px 0;
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: space-around;
+        background-color: rgb(34, 34, 34);
+        border-radius: 50px;
     }
 
     .ligth{

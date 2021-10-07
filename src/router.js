@@ -1,9 +1,8 @@
-import Vue from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
-import RedLight from '@/components/RedLight'
-import YellowLight from '@/components/YellowLight'
-import GreenLight from '@/components/GreenLight'
+import RedOn from '@/pages/RedOn'
+import YellowOn from '@/pages/YellowOn'
+import GreenOn from '@/pages/GreenOn'
 
 const routes = [
     {
@@ -13,18 +12,18 @@ const routes = [
     {
         path: '/red',
         name: 'red',
-        component: RedLight,
+        component: RedOn,
         props: true
     },
     {
         path: '/green',
         name: 'green',
-        component: GreenLight   
+        component: GreenOn   
     },
     {
         path: '/yellow',
         name: 'yellow',
-        component: YellowLight
+        component: YellowOn
     }
 ]
 
