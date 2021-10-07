@@ -6,6 +6,7 @@ import GreenOn from '@/pages/GreenOn'
 
 const routes = [
     {
+        // redirect on '/red' for start app on load
         path: '/',
         redirect: {name:'red'}
     },

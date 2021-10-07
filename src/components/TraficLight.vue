@@ -20,26 +20,29 @@ export default {
         if(this.currentPath === '/yellow'){
             this.prePath = '/red'
         }
+        // set timer and prePath from the localStorage on reload
         if((window.history.state.back !== null) && (localStorage.getItem('timer') !== null)){
             this.$store.commit('setTimer', localStorage.getItem('timer'))
             this.prePath = localStorage.getItem('prePath')
         }
+        // process the timer
         this.prTimer
     },
 
     computed:{
         ...mapGetters(['getTimer']),
+        // func for process the timer
         prTimer(){
-                if(this.getTimer === 0){
-                    if(this.currentPath === '/red' || this.currentPath === '/'){
-                        this.$store.commit('setTimer', 10)
-                    }else if (this.currentPath === '/yellow'){
-                        this.$store.commit('setTimer', 3)
-                    }else if (this.currentPath === '/green'){
-                        this.$store.commit('setTimer', 15)
-                    }
+            if(this.getTimer === 0){
+                // set timer depending on the path
+                if(this.currentPath === '/red' || this.currentPath === '/'){
+                    this.$store.commit('setTimer', 10)
+                }else if (this.currentPath === '/yellow'){
+                    this.$store.commit('setTimer', 3)
+                }else if (this.currentPath === '/green'){
+                    this.$store.commit('setTimer', 15)
                 }
-
+            }
 
             let interval = setInterval(() =>{
                 this.$store.commit('decrTimer')
@@ -52,22 +55,21 @@ export default {
                 clearInterval(interval)
                 this.changePath
                 this.prTimer
-            }, this.$store.getters.getTimer*1000)
+            }, this.getTimer*1000)
         },
+        // func for change path
         changePath(){
             if ((this.currentPath === '/yellow') && (this.prePath === '/red')){
                 this.prePath = this.currentPath
                 this.currentPath = '/green'
-                this.$router.push(this.currentPath)
             }else if ((this.currentPath === '/yellow') && (this.prePath === '/green')){
                 this.prePath = this.currentPath
                 this.currentPath = '/red'  
-                this.$router.push(this.currentPath)
             }else if(this.currentPath === '/red' || this.currentPath === '/green'){
                 this.prePath = this.currentPath
                 this.currentPath = '/yellow'
-                this.$router.push(this.currentPath)
             }
+            this.$router.push(this.currentPath)
             localStorage.setItem('prePath', this.prePath)
             this.$store.commit('setActive')
         }
